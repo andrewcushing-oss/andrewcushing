@@ -280,58 +280,6 @@
   </div>
 </section>
 
-<section class="contact" id="contact">
-  <div class="contact-inner">
-    <p class="contact-eyebrow">Contact</p>
-    <h2>Ready to get <em>started?</em></h2>
-    <p class="contact-sub">Tell me about your project and I'll get back to you within one business day. Based in San Francisco, CA — working with clients globally.</p>
-    <form class="contact-form" action="https://formspree.io/f/mjgadgla" method="POST">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" placeholder="Your name" />
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" placeholder="your@email.com" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Company</label>
-          <input type="text" name="company" placeholder="Company name" />
-        </div>
-        <div class="form-group">
-          <label>Area of interest</label>
-          <select name="interest">
-            <option value="" disabled selected>Select one...</option>
-            <option>DTC Commerce</option>
-            <option>B2B Commerce</option>
-            <option>Mobile Commerce</option>
-            <option>International Expansion</option>
-            <option>Engineering Leadership</option>
-            <option>Not sure yet</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>What are you working on?</label>
-        <textarea name="message" placeholder="Describe your challenge or project..."></textarea>
-      </div>
-      <button type="submit" class="btn-submit" id="submit-btn">Send message →</button>
-    </form>
-  </div>
-</section>
-
-Key Changes Made
-
-action="https://formspree.io/f/mjgadgla" added — replace with your real ID
-method="POST" added
-onsubmit="handleSubmit(event)" removed
-name="name", name="email", name="company", name="interest", name="message" added to all fields
-
-
-Once you have your Formspree form ID, swap it in and commit to GitHub. Let me know what your Formspree URL is and I can give you the exact final code with it already filled in!https://formspree.io/f/mjgadgla11:51 AMHere is your final form code with your Formspree URL already filled in — just copy and paste this directly into GitHub:
 html<section class="contact" id="contact">
   <div class="contact-inner">
     <p class="contact-eyebrow">Contact</p>
@@ -402,6 +350,28 @@ function handleSubmit(e) {
   }, 3000);
 }
 </script>
+<script>
+async function submitForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
 
+  const data = new FormData(form);
+  const response = await fetch('https://formspree.io/f/mjgadgla', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  if (response.ok) {
+    window.location.href = '/thank-you.html';
+  } else {
+    btn.textContent = 'Something went wrong — try again';
+    btn.disabled = false;
+  }
+}
+</script>
 </body>
 </html>
