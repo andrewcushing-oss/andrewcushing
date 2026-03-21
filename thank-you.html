@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — Andrew Cushing</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --white: #ffffff; --black: #0a0a0a; --gray-50: #f7f7f6; --gray-100: #eeecea;
+    --gray-300: #c5c3bc; --gray-500: #888780; --gray-800: #2c2c2a;
+    --accent: #185FA5; --accent-light: #E6F1FB;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--black); color: var(--white); font-size: 16px; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid rgba(255,255,255,0.08); z-index: 100;
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--white); text-decoration: none; }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { font-size: 0.875rem; font-weight: 400; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { font-size: 0.875rem !important; font-weight: 500 !important; color: var(--black) !important; background: var(--white); padding: 0.5rem 1.25rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.8; }
+
+  main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 8rem 3rem 5rem; position: relative; overflow: hidden;
+  }
+
+  .bg-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 0.5px, transparent 0.5px), linear-gradient(to bottom, rgba(255,255,255,0.04) 0.5px, transparent 0.5px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+  }
+
+  .content {
+    position: relative; z-index: 1;
+    max-width: 600px; margin: 0 auto; text-align: center;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .check-wrap {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(24, 95, 165, 0.15); border: 0.5px solid rgba(24, 95, 165, 0.4);
+    margin-bottom: 2rem;
+    animation: popIn 0.5s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .eyebrow {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gray-500); margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  h1 em { font-style: italic; color: var(--gray-300); }
+
+  .sub {
+    color: var(--gray-500); font-size: 0.95rem; font-weight: 300;
+    line-height: 1.8; margin-bottom: 3rem;
+  }
+
+  /* Next steps cards */
+  .steps {
+    display: flex; flex-direction: column; gap: 0;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden;
+    text-align: left; margin-bottom: 2.5rem;
+  }
+
+  .step {
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 0.5px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    transition: background 0.2s;
+  }
+  .step:last-child { border-bottom: none; }
+  .step:hover { background: rgba(255,255,255,0.06); }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; color: rgba(255,255,255,0.12);
+    line-height: 1; flex-shrink: 0; padding-top: 0.1rem;
+  }
+
+  .step-text h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; color: var(--white); }
+  .step-text p  { font-size: 0.82rem; color: var(--gray-500); line-height: 1.6; font-weight: 300; }
+
+  .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-block; background: var(--white); color: var(--black);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    padding: 0.85rem 2rem; border-radius: 2rem; text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.9rem; color: var(--gray-500); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); }
+
+  footer {
+    background: var(--black); border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between;
+    color: var(--gray-500); font-size: 0.8rem;
+  }
+  footer a { color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--white); }
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    main { padding-left: 1.5rem; padding-right: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Andrew Cushing<span style="color:var(--accent)">.</span></a>
+  <div class="nav-links">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact" class="nav-cta">Let's talk</a>
+  </div>
+</nav>
+
+<main>
+  <div class="bg-grid"></div>
+  <div class="content">
+
+    <div class="check-wrap">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M6 14.5l5.5 5.5L22 8" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <p class="eyebrow">Message received</p>
+    <h1>Thanks for reaching <em>out.</em></h1>
+    <p class="sub">Your message is on its way. I personally review every inquiry and will be in touch within one business day.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-text">
+          <h4>You'll hear from me within one business day</h4>
+          <p>I review every inquiry personally. Expect a thoughtful response to your project details at andrew.cushing@gmail.com.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-text">
+          <h4>We'll schedule an introductory call</h4>
+          <p>If there's a good fit, we'll set up a 30-minute call to discuss your challenge, timeline, and how I can help.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-text">
+          <h4>I'll put together a tailored proposal</h4>
+          <p>Based on our conversation, I'll outline an engagement approach, scope, and timeline specific to your needs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="index.html" class="btn-primary">Back to home</a>
+      <a href="index.html#services" class="btn-ghost">Explore services →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Andrew Cushing Consulting. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
