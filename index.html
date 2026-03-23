@@ -136,9 +136,9 @@
   <div style="width:100%; max-width:900px; margin:0 auto;">
     <div class="hero-content">
       <div class="hero-pills">
-        <span class="hero-label">DTC Commerce</span>
+        <span class="hero-label">Mobile Commerce</span>
         <span class="hero-label-gray">&</span>
-        <span class="hero-label">B2B Commerce</span>
+        <span class="hero-label">New Markets</span>
         <span class="hero-label-gray">&</span>
         <span class="hero-label">Technology Consulting</span>
       </div>
@@ -234,31 +234,31 @@
   <div class="services-header">
     <p class="section-eyebrow">Services</p>
     <h2>Where I can help</h2>
-    <p>Specialized engagements across DTC and B2B commerce, backed by deep technology expertise and real enterprise experience.</p>
+    <p>Specialized engagements across mobile commerce and new markets, backed by deep technology expertise and real enterprise experience.</p>
   </div>
   <div class="services-cols">
     <div>
-      <div class="services-col-header">Direct to consumer</div>
+      <div class="services-col-header">Mobile & New Markets</div>
       <div class="services-grid-inner">
         <div class="service-item">
           <div class="service-num">01</div>
-          <h3>DTC Platform Strategy & Launch</h3>
-          <p>Selecting and implementing the right storefront — Salesforce Commerce Cloud, Shopify, or headless — matched to your brand and growth stage.</p>
-        </div>
-        <div class="service-item">
-          <div class="service-num">02</div>
           <h3>Mobile Commerce</h3>
           <p>React Native iOS and Android app development, app store optimization, and mobile-first architecture for commerce experiences.</p>
         </div>
         <div class="service-item">
-          <div class="service-num">03</div>
+          <div class="service-num">02</div>
           <h3>International Expansion</h3>
           <p>Multi-country, multi-currency, multi-language commerce rollouts — drawing on firsthand experience launching across 18+ countries.</p>
+        </div>
+        <div class="service-item">
+          <div class="service-num">03</div>
+          <h3>DTC Platform Strategy & Launch</h3>
+          <p>Selecting and implementing the right storefront — Salesforce Commerce Cloud, Shopify, or headless — matched to your brand and growth stage.</p>
         </div>
       </div>
     </div>
     <div>
-      <div class="services-col-header">Business to business</div>
+      <div class="services-col-header">Enterprise & B2B</div>
       <div class="services-grid-inner">
         <div class="service-item">
           <div class="service-num">04</div>
@@ -279,6 +279,7 @@
     </div>
   </div>
 </section>
+
 <section class="contact" id="contact">
   <div class="contact-inner">
     <p class="contact-eyebrow">Contact</p>
@@ -304,10 +305,10 @@
           <label>Area of interest</label>
           <select name="interest">
             <option value="" disabled selected>Select one...</option>
-            <option>DTC Commerce</option>
-            <option>B2B Commerce</option>
             <option>Mobile Commerce</option>
             <option>International Expansion</option>
+            <option>DTC Commerce</option>
+            <option>B2B Commerce</option>
             <option>Engineering Leadership</option>
             <option>Not sure yet</option>
           </select>
@@ -331,6 +332,7 @@
     <a href="#contact">Contact</a>
   </div>
 </footer>
+
 <script>
 async function submitForm(e) {
   e.preventDefault();
@@ -347,7 +349,7 @@ async function submitForm(e) {
   });
 
   if (response.ok) {
-window.location.href = 'https://www.andrewcushing.com/thank-you.html';
+    window.location.href = 'https://www.andrewcushing.com/thank-you.html';
   } else {
     btn.textContent = 'Something went wrong — try again';
     btn.disabled = false;
