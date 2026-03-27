@@ -1,0 +1,36 @@
+# Andrew Cushing Consulting
+
+> Technology consultant specializing in mobile commerce and international expansion. Based in San Francisco, CA.
+
+Andrew Cushing is a technology consultant and former Director of Mobile Application Development at Levi Strauss & Co., where he spent 17 years leading digital commerce initiatives across North America, Europe, and beyond.
+
+## About
+
+Andrew has launched eCommerce platforms in 18+ countries, built mobile apps with millions of downloads, introduced enterprise B2B platforms across Europe, and led engineering teams of 20+ developers — always delivering within budget and on time. He holds an AB from Vassar College.
+
+## Services
+
+- Mobile Commerce: React Native iOS and Android app development, app store optimization, mobile-first architecture
+- International Expansion: Multi-country, multi-currency, multi-language commerce rollouts across 18+ countries
+- DTC Platform Strategy & Launch: Salesforce Commerce Cloud, Shopify, headless commerce
+- B2B Platform Implementation: Enterprise wholesale partner platforms
+- Systems Integration & DevOps: CI/CD pipelines, AWS/Azure, platform integrations
+- Engineering Leadership: Fractional or advisory engineering leadership
+
+## Experience
+
+- 17+ years at Levi Strauss & Co. as Senior Manager and Director
+- Launched commerce platforms across 4 continents, 8 currencies, 12 languages
+- Led teams of 20+ engineers
+- All projects delivered within 2% of budget
+
+## Technologies
+
+React Native, Salesforce Commerce Cloud, AWS, Azure, Hybris, CI/CD, Braze, Optimizely, Adyen, Microservices, Agile/Scrum
+
+## Links
+
+- Home: https://www.andrewcushing.com
+- About: https://www.andrewcushing.com/#about
+- Services: https://www.andrewcushing.com/#services
+- Contact: https://www.andrewcushing.com/#contact
