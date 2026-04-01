@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Enabled Field Service — Demo | Andrew Cushing Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --white: #ffffff;
+    --black: #0a0a0a;
+    --gray-50: #f7f7f6;
+    --gray-100: #eeecea;
+    --gray-200: #dddbd7;
+    --gray-300: #c5c3bc;
+    --gray-500: #888780;
+    --gray-800: #2c2c2a;
+    --accent: #185FA5;
+    --accent-light: #E6F1FB;
+    --accent-mid: #B5D4F4;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --red: #E24B4A;
+    --red-light: #FCEBEB;
+    --green: #639922;
+    --green-light: #EAF3DE;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-100);
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem; color: var(--black);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray-500);
+    background: var(--gray-100); padding: 0.3rem 0.8rem; border-radius: 2rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-100);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 1rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    max-width: 600px; margin: 0 auto 2rem;
+    font-size: 1rem; color: var(--gray-500);
+    font-weight: 300; line-height: 1.8;
+  }
+  .hero-pills { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .hero-pill {
+    font-size: 0.78rem; font-weight: 500;
+    background: var(--accent-light); color: var(--accent);
+    padding: 0.4rem 1rem; border-radius: 2rem;
+  }
+
+  /* ── SECTIONS ── */
+  .section { padding: 4rem 2rem; }
+  .section-inner { max-width: 1000px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400; letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .section h2 em { font-style: italic; color: var(--accent); }
+  .section-desc {
+    font-size: 0.95rem; color: var(--gray-500);
+    font-weight: 300; max-width: 580px; margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  /* ── WORKFLOW DIAGRAM ── */
+  .workflow { background: var(--white); }
+  .legend {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: var(--gray-500);
+  }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 3px;
+  }
+  .flow-table { width: 100%; border-collapse: collapse; }
+  .flow-row { border-bottom: 1px solid var(--gray-100); }
+  .flow-row:last-child { border-bottom: none; }
+  .flow-num {
+    width: 32px; padding: 1rem 0.5rem 1rem 0;
+    font-size: 0.75rem; font-weight: 500; color: var(--gray-300);
+    vertical-align: top; padding-top: 1.25rem;
+  }
+  .flow-label {
+    width: 140px; padding: 1rem 1rem 1rem 0;
+    font-size: 0.8rem; font-weight: 500; color: var(--black);
+    vertical-align: top; padding-top: 1.25rem;
+  }
+  .flow-steps {
+    padding: 0.75rem 0;
+    display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+  }
+  .flow-step {
+    display: flex; flex-direction: column;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px; border: 1px solid;
+    min-width: 130px; font-size: 0.78rem;
+  }
+  .flow-step-title { font-weight: 500; margin-bottom: 0.15rem; }
+  .flow-step-sub { font-size: 0.7rem; opacity: 0.75; }
+  .flow-step.tech { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+  .flow-step.ai { background: var(--teal-light); border-color: #9FE1CB; color: #085041; }
+  .flow-step.customer { background: var(--amber-light); border-color: #FAC775; color: #412402; }
+  .flow-step.system { background: var(--gray-100); border-color: var(--gray-200); color: var(--gray-800); }
+  .flow-arrow {
+    color: var(--gray-300); font-size: 1rem; flex-shrink: 0;
+  }
+
+  /* ── DEMO ── */
+  .demo-section { background: var(--gray-50); }
+  .demo-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3rem;
+    align-items: start;
+  }
+  .demo-info h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem; font-weight: 400; margin-bottom: 0.75rem;
+  }
+  .demo-info p {
+    font-size: 0.9rem; color: var(--gray-500);
+    line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem;
+  }
+  .screen-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gray-500); margin-bottom: 0.5rem;
+  }
+  .screen-list { list-style: none; }
+  .screen-list li {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0.75rem; border-radius: 8px;
+    font-size: 0.88rem; cursor: pointer; transition: background 0.15s;
+    color: var(--gray-500);
+  }
+  .screen-list li:hover { background: var(--gray-100); }
+  .screen-list li.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .screen-list li .num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gray-100); color: var(--gray-500);
+    font-size: 0.72rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .screen-list li.active .num { background: var(--accent); color: var(--white); }
+
+  /* ── PHONE ── */
+  .phone-wrap { display: flex; justify-content: center; }
+  .phone {
+    width: 300px;
+    background: var(--white);
+    border-radius: 36px;
+    border: 2px solid var(--gray-200);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+  .phone-status {
+    background: #1a1a2e; padding: 10px 20px 6px;
+    display: flex; justify-content: space-between;
+  }
+  .phone-status span { color: #fff; font-size: 10px; font-weight: 500; }
+  .phone-header {
+    background: var(--accent); padding: 11px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .phone-header .title { color: #fff; font-size: 14px; font-weight: 500; }
+  .phone-header .badge {
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-size: 9px; padding: 2px 7px; border-radius: 10px;
+  }
+  .phone-screen { min-height: 450px; }
+  .phone-nav {
+    display: flex; border-top: 1px solid var(--gray-100);
+    background: var(--white);
+  }
+  .phone-nav button {
+    flex: 1; padding: 7px 2px 5px;
+    font-size: 8px; color: var(--gray-300);
+    background: none; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    transition: color 0.15s;
+  }
+  .phone-nav button.active { color: var(--accent); }
+  .phone-nav button svg { width: 14px; height: 14px; }
+
+  /* ── PHONE SCREEN INTERNALS ── */
+  .sc { padding: 11px 12px; }
+  .sc-label {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-300); margin-bottom: 7px;
+  }
+  .sc-card {
+    background: var(--white); border: 1px solid var(--gray-100);
+    border-radius: 10px; padding: 10px 11px; margin-bottom: 8px;
+  }
+  .sc-card-title { font-size: 12px; font-weight: 500; color: var(--black); margin-bottom: 2px; }
+  .sc-card-sub { font-size: 10px; color: var(--gray-500); }
+  .sc-ai {
+    background: var(--accent-light); border: 1px solid var(--accent-mid);
+    border-radius: 10px; padding: 9px 11px; margin-bottom: 8px;
+  }
+  .sc-ai-label {
+    font-size: 8px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .sc-ai-label::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+  }
+  .sc-ai-text { font-size: 10.5px; color: var(--black); line-height: 1.55; }
+  .sc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .pill {
+    font-size: 9px; font-weight: 500; padding: 2px 7px; border-radius: 8px;
+  }
+  .pill-green { background: var(--green-light); color: #27500A; }
+  .pill-amber { background: var(--amber-light); color: #412402; }
+  .pill-red { background: var(--red-light); color: #501313; }
+  .pill-blue { background: var(--accent-light); color: #042C53; }
+  .sc-btn {
+    width: 100%; background: var(--accent); color: var(--white);
+    border: none; border-radius: 8px; padding: 8px;
+    font-size: 11px; font-weight: 500; cursor: pointer; margin-top: 3px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .sc-btn-ghost {
+    width: 100%; background: none; color: var(--accent);
+    border: 1px solid var(--accent); border-radius: 8px; padding: 7px;
+    font-size: 10px; font-weight: 500; cursor: pointer; margin-top: 5px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .check-row {
+    display: flex; align-items: center; gap: 7px;
+    padding: 5px 0; border-bottom: 1px solid var(--gray-100);
+    font-size: 10.5px; color: var(--black);
+  }
+  .check-row:last-child { border-bottom: none; }
+  .check-box {
+    width: 14px; height: 14px; border-radius: 3px;
+    border: 1.5px solid var(--gray-300); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .check-box.checked { background: var(--teal); border-color: var(--teal); }
+  .part-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 6px 0; border-bottom: 1px solid var(--gray-100); font-size: 10.5px;
+  }
+  .part-row:last-child { border-bottom: none; }
+  .sc-upsell {
+    background: var(--amber-light); border: 1px solid #FAC775;
+    border-radius: 10px; padding: 9px 11px; margin-bottom: 8px;
+  }
+  .sc-upsell-label {
+    font-size: 8px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--amber); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 3px;
+  }
+  .sc-upsell-label::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--amber); display: inline-block;
+  }
+  .step-dots { display: flex; justify-content: center; gap: 5px; padding: 7px 0 3px; }
+  .step-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gray-200); }
+  .step-dot.active { background: var(--accent); width: 16px; border-radius: 3px; }
+
+  /* ── VALUE PROPS ── */
+  .value-section { background: var(--white); }
+  .value-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .value-card {
+    background: var(--gray-50); border: 1px solid var(--gray-100);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .value-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--accent-light); display: flex; align-items: center;
+    justify-content: center; margin-bottom: 1rem;
+  }
+  .value-card h4 {
+    font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem;
+  }
+  .value-card p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.7; font-weight: 300; }
+  .value-stat {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.75rem; font-style: italic; color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--black); padding: 4rem 2rem; text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400;
+    color: var(--white); margin-bottom: 1rem; letter-spacing: -0.02em;
+  }
+  .cta-section h2 em { font-style: italic; color: var(--accent-mid); }
+  .cta-section p {
+    font-size: 0.95rem; color: rgba(255,255,255,0.5);
+    max-width: 480px; margin: 0 auto 2rem; font-weight: 300; line-height: 1.8;
+  }
+  .cta-btn {
+    display: inline-block; background: var(--accent); color: var(--white);
+    font-size: 0.85rem; font-weight: 500; padding: 0.9rem 2.25rem;
+    border-radius: 2rem; text-decoration: none; transition: opacity 0.2s;
+  }
+  .cta-btn:hover { opacity: 0.85; }
+  .cta-sub {
+    margin-top: 1.25rem; font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gray-50); border-top: 1px solid var(--gray-100);
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.78rem; color: var(--gray-300);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .demo-layout { grid-template-columns: 1fr; }
+    .value-grid { grid-template-columns: 1fr; }
+    .flow-label { display: none; }
+    nav { padding: 0.75rem 1rem; }
+    .section { padding: 2.5rem 1rem; }
+    .hero { padding: 2.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://www.andrewcushing.com" class="nav-logo">Andrew<span>Cushing</span></a>
+  <span class="nav-tag">Prepared for ARS®/Rescue Rooter® · AI-Enabled Associate Tools</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Concept demo · Prepared for ARS®/Rescue Rooter®</p>
+  <h1>AI-Enabled Tools for<br>ARS®/Rescue Rooter® <em>Technicians</em></h1>
+  <p class="hero-sub">What it looks like when ARS®/Rescue Rooter® technicians have an AI assistant in their pocket — across HVAC, plumbing, electrical, heating, and air quality services, from dispatch to diagnosis to compliance, every step of every job.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">Air conditioning</span>
+    <span class="hero-pill">Heating &amp; furnace</span>
+    <span class="hero-pill">Plumbing</span>
+    <span class="hero-pill">Electrical</span>
+    <span class="hero-pill">Air quality</span>
+    <span class="hero-pill">Smart home</span>
+  </div>
+</div>
+
+<!-- WORKFLOW DIAGRAM -->
+<section class="section workflow">
+  <div class="section-inner">
+    <p class="section-eyebrow">How it works</p>
+    <h2>The AI-assisted <em>ARS tech workflow</em></h2>
+    <p class="section-desc">Across HVAC, plumbing, electrical, and air quality — AI doesn't replace the ARS technician's judgment, it puts the right information in front of them at the right moment, for every stage of every job.</p>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-light);border:1px solid var(--accent-mid)"></div> Tech action</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal-light);border:1px solid #9FE1CB"></div> AI assist</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber-light);border:1px solid #FAC775"></div> Homeowner (outbound)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gray-100);border:1px solid var(--gray-200)"></div> System / back office</div>
+    </div>
+
+    <table class="flow-table">
+      <tr class="flow-row">
+        <td class="flow-num">01</td>
+        <td class="flow-label">Dispatch &amp; routing</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step system"><span class="flow-step-title">Job assigned</span><span class="flow-step-sub">Dispatch system</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">AI route optimizer</span><span class="flow-step-sub">Traffic + parts avail.</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step tech"><span class="flow-step-title">Tech receives brief</span><span class="flow-step-sub">Job history, prior visits</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step customer"><span class="flow-step-title">Customer notified</span><span class="flow-step-sub">ETA confirmation</span></div>
+          </div>
+        </td>
+      </tr>
+      <tr class="flow-row">
+        <td class="flow-num">02</td>
+        <td class="flow-label">On-site diagnostics</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step tech"><span class="flow-step-title">Tech arrives</span><span class="flow-step-sub">Opens job on mobile</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">AI diagnostic assist</span><span class="flow-step-sub">Symptom → likely cause</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">Equipment lookup</span><span class="flow-step-sub">Manuals, error codes</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step tech"><span class="flow-step-title">Fix identified</span><span class="flow-step-sub">Step-by-step guide</span></div>
+          </div>
+        </td>
+      </tr>
+      <tr class="flow-row">
+        <td class="flow-num">03</td>
+        <td class="flow-label">Parts lookup</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step tech"><span class="flow-step-title">Part needed</span><span class="flow-step-sub">Scan or describe</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">AI parts matcher</span><span class="flow-step-sub">OEM + aftermarket</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step system"><span class="flow-step-title">Inventory check</span><span class="flow-step-sub">Truck or warehouse</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step system"><span class="flow-step-title">Auto-order</span><span class="flow-step-sub">If not in stock</span></div>
+          </div>
+        </td>
+      </tr>
+      <tr class="flow-row">
+        <td class="flow-num">04</td>
+        <td class="flow-label">Job summary &amp; comms</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step tech"><span class="flow-step-title">Work complete</span><span class="flow-step-sub">Tech confirms done</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">AI drafts summary</span><span class="flow-step-sub">Plain-English report</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step tech"><span class="flow-step-title">Tech reviews &amp; sends</span><span class="flow-step-sub">One-tap approval</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step customer"><span class="flow-step-title">Customer receives</span><span class="flow-step-sub">SMS + email</span></div>
+          </div>
+        </td>
+      </tr>
+      <tr class="flow-row">
+        <td class="flow-num">05</td>
+        <td class="flow-label">Compliance</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step tech"><span class="flow-step-title">Checklist triggered</span><span class="flow-step-sub">Auto by job type</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">AI compliance check</span><span class="flow-step-sub">Flags missing steps</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step tech"><span class="flow-step-title">Tech signs off</span><span class="flow-step-sub">Photo + signature</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step system"><span class="flow-step-title">Auto-filed</span><span class="flow-step-sub">Permits + warranty</span></div>
+          </div>
+        </td>
+      </tr>
+      <tr class="flow-row">
+        <td class="flow-num">06</td>
+        <td class="flow-label">Upsell</td>
+        <td>
+          <div class="flow-steps">
+            <div class="flow-step ai"><span class="flow-step-title">AI scans job data</span><span class="flow-step-sub">Age, history, efficiency</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step ai"><span class="flow-step-title">Surfaces opportunity</span><span class="flow-step-sub">Service plan, filter swap</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step tech"><span class="flow-step-title">Tech presents offer</span><span class="flow-step-sub">Price shown on device</span></div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step customer"><span class="flow-step-title">Customer decides</span><span class="flow-step-sub">Accepts or declines</span></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- MOBILE APP DEMO -->
+<section class="section demo-section" id="demo">
+  <div class="section-inner">
+    <p class="section-eyebrow">Interactive demo</p>
+    <h2>See it in the <em>ARS tech's hands</em></h2>
+    <p class="section-desc">Tap through six screens of the ServicePro AI mobile app — a realistic mockup of what each workflow step looks like on an ARS/Rescue Rooter technician's device, for any service type.</p>
+    <div class="demo-layout">
+      <div class="demo-info">
+        <h3>ServicePro AI</h3>
+        <p>A purpose-built mobile application for ARS/Rescue Rooter field technicians across all service lines — AC, heating, plumbing, electrical, air quality, smart home, and insulation. Every screen is designed around the technician's actual workflow, not a generic CRM adapted for field use.</p>
+        <p>AI handles the lookup, drafting, and flagging. The ARS technician stays in control at every step — and the same app works whether the job is an AC repair, a drain service, or a generator installation.</p>
+        <div class="screen-label">App screens</div>
+        <ul class="screen-list" id="screen-list">
+          <li class="active" onclick="switchTab(0)"><span class="num">1</span> Job dispatch & routing</li>
+          <li onclick="switchTab(1)"><span class="num">2</span> On-site diagnostics</li>
+          <li onclick="switchTab(2)"><span class="num">3</span> Parts lookup & ordering</li>
+          <li onclick="switchTab(3)"><span class="num">4</span> Job summary &amp; comms</li>
+          <li onclick="switchTab(4)"><span class="num">5</span> Compliance & safety</li>
+          <li onclick="switchTab(5)"><span class="num">6</span> Upsell recommendations</li>
+        </ul>
+      </div>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status">
+            <span>9:41 AM</span>
+            <span>ServicePro AI</span>
+            <span>5G ▪ 92%</span>
+          </div>
+          <div class="phone-header">
+            <span class="title" id="phone-title">Today's Jobs</span>
+            <span class="badge" id="phone-badge">3 jobs</span>
+          </div>
+          <div class="phone-screen" id="phone-screen"></div>
+          <div class="phone-nav" id="phone-nav">
+            <button class="active" onclick="switchTab(0)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+              Jobs
+            </button>
+            <button onclick="switchTab(1)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.5l2 2"/></svg>
+              Diagnose
+            </button>
+            <button onclick="switchTab(2)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 7h6M5 10h4"/></svg>
+              Parts
+            </button>
+            <button onclick="switchTab(3)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/><path d="M2 4l6 4.5L14 4"/></svg>
+              Comms
+            </button>
+            <button onclick="switchTab(4)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1 3h3.5l-2.8 2 1 3L8 8.5 5.3 10l1-3L3.5 5H7z"/></svg>
+              Comply
+            </button>
+            <button onclick="switchTab(5)">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M11 8.5l1.5 1.5-3 3"/></svg>
+              Upsell
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPS -->
+<section class="section value-section">
+  <div class="section-inner">
+    <p class="section-eyebrow">The business case</p>
+    <h2>What this means for <em>ARS/Rescue Rooter</em></h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2v4M10 14v4M2 10h4M14 10h4" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="3" stroke="#185FA5" stroke-width="1.5"/></svg>
+        </div>
+        <div class="value-stat">40%</div>
+        <h4>Faster diagnostics</h4>
+        <p>AI surfaces the most likely fault from symptom descriptions in seconds — reducing time spent looking up manuals and error codes on the job.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="11" rx="2" stroke="#185FA5" stroke-width="1.5"/><path d="M3 8h14M7 5V3M13 5V3" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="value-stat">Zero</div>
+        <h4>Missed compliance steps</h4>
+        <p>Checklists auto-launch by job type, and AI flags incomplete items before the tech leaves the site — eliminating permit and warranty documentation gaps.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3l2 4.5h5l-4 3 1.5 4.5L10 12l-4.5 3L7 10.5 3 7.5h5z" stroke="#185FA5" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="value-stat">25%</div>
+        <h4>Higher upsell conversion</h4>
+        <p>AI-surfaced recommendations based on equipment age and history — annual tune-ups, service agreements, smart thermostats, air quality upgrades — feel consultative, not pushy, increasing customer acceptance rates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to build this for<br><em>ARS/Rescue Rooter?</em></h2>
+  <p>Andrew Cushing brings 17 years of Fortune 500 mobile application experience to building practical, AI-enabled tools for large field service operations.</p>
+  <a href="https://www.andrewcushing.com/#contact" class="cta-btn">Start a conversation</a>
+  <p class="cta-sub">andrewcushing.com · andrew.cushing@gmail.com</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Andrew Cushing Consulting</span>
+  <span>Concept demo prepared for ARS®/Rescue Rooter® — <a href="https://www.andrewcushing.com">andrewcushing.com</a></span>
+</footer>
+
+<script>
+const titles = ['Today\'s Jobs','On-site Diagnostics','Parts Lookup','Job Summary & Comms','Compliance','Upsell'];
+const badges = ['3 jobs','AI assist','2 on truck','Draft ready','2 pending','2 offers'];
+
+function dots(a) {
+  return '<div class="step-dots">' + [0,1,2,3,4,5].map(i =>
+    `<div class="step-dot ${i===a?'active':''}"></div>`).join('') + '</div>';
+}
+
+const screens = [
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">Assigned jobs — today</div>
+    <div class="sc-card" style="border-left:3px solid #E24B4A">
+      <div class="sc-row"><span class="sc-card-title">Martinez Residence</span><span class="pill pill-red">Urgent</span></div>
+      <div class="sc-card-sub">AC not cooling — Air Conditioning · 3420 Valencia St</div>
+      <div class="sc-card-sub" style="color:#185FA5;margin-top:3px">ETA 9:55 AM · 12 min away</div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-row"><span class="sc-card-title">Office Complex Fl 3–5</span><span class="pill pill-amber">Scheduled</span></div>
+      <div class="sc-card-sub">Annual HVAC maintenance — 500 Market</div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-row"><span class="sc-card-title">Chen Household</span><span class="pill pill-green">Confirmed</span></div>
+      <div class="sc-card-sub">Water heater flush — Plumbing · 88 Oak St</div>
+    </div>
+    <div class="sc-ai">
+      <div class="sc-ai-label">AI route tip</div>
+      <div class="sc-ai-text">Valencia job is priority. Avoid Mission St (construction) — saves 8 min. Part #A4421 already on your truck.</div>
+    </div>
+  </div>`,
+
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">Martinez · AC not cooling</div>
+    <div class="sc-card">
+      <div class="sc-card-title">Carrier 24ACC636A003</div>
+      <div class="sc-card-sub">Installed 2017 · Last serviced Aug 2024</div>
+    </div>
+    <div class="sc-card" style="background:var(--gray-50)">
+      <div style="font-size:10.5px;color:var(--gray-500)">Running but warm air. Compressor cycling every 2 min. No ice on lines.</div>
+    </div>
+    <div class="sc-ai">
+      <div class="sc-ai-label">AI diagnosis</div>
+      <div class="sc-ai-text"><strong>Most likely:</strong> Low refrigerant (R-410A) — 78% confidence<br><br><strong>Also check:</strong> Dirty condenser coils, failing capacitor<br><br><span style="color:#185FA5;font-size:9.5px">View wiring diagram → &nbsp; Error codes →</span></div>
+    </div>
+    <button class="sc-btn">Confirm &amp; proceed</button>
+  </div>`,
+
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">Parts — low refrigerant fix</div>
+    <div class="sc-ai"><div class="sc-ai-label">AI matched parts</div></div>
+    <div class="sc-card" style="padding:7px 10px">
+      <div class="part-row"><span>R-410A Refrigerant 25 lb</span><span class="pill pill-green">On truck</span></div>
+      <div class="part-row"><span>Valve core tool kit</span><span class="pill pill-green">On truck</span></div>
+      <div class="part-row"><span>Capacitor 45/5 MFD (OEM)</span><span class="pill pill-amber">Warehouse</span></div>
+      <div class="part-row"><span>Condenser coil cleaner</span><span class="pill pill-green">On truck</span></div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-row"><span style="font-size:11px;font-weight:500">Capacitor 45/5 MFD</span><span style="font-size:11px;color:#185FA5">$38.50</span></div>
+      <div class="sc-card-sub">Warehouse · Ready 2 hrs · OEM $62</div>
+      <button class="sc-btn-ghost">Order for next job</button>
+    </div>
+    <button class="sc-btn">Parts confirmed — start repair</button>
+  </div>`,
+
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">Job complete — close out job #4821</div>
+    <div class="sc-ai">
+      <div class="sc-ai-label">AI job summary</div>
+      <div class="sc-ai-text"><strong>Work performed:</strong> Recharged R-410A (low due to valve leak, now sealed). Cleaned condenser coils. System confirmed cooling at set temp.<br><br><strong>Parts used:</strong> R-410A 2.5 lbs · Valve core replacement<br><br><strong>Time on site:</strong> 52 min</div>
+    </div>
+    <div class="sc-label" style="margin-top:8px">Notify homeowner</div>
+    <div class="sc-card" style="padding:7px 10px">
+      <div class="sc-row" style="margin-bottom:0"><span style="font-size:10.5px">SMS confirmation to Martinez</span><input type="checkbox" checked style="accent-color:#185FA5"></div>
+    </div>
+    <div class="sc-card" style="padding:7px 10px">
+      <div class="sc-row" style="margin-bottom:0"><span style="font-size:10.5px">Email invoice to martinez@gmail.com</span><input type="checkbox" checked style="accent-color:#185FA5"></div>
+    </div>
+    <button class="sc-btn">Send &amp; close job</button>
+    <button class="sc-btn-ghost">Preview homeowner message</button>
+  </div>`,
+
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">Compliance — refrigerant work</div>
+    <div class="sc-ai">
+      <div class="sc-ai-label">AI flagged</div>
+      <div class="sc-ai-text">EPA 608 cert required for R-410A. 2 items incomplete.</div>
+    </div>
+    <div class="sc-card" style="padding:7px 10px" id="checklist">
+      <div class="check-row"><div class="check-box checked" onclick="tog(this)"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>Refrigerant quantity logged</div>
+      <div class="check-row"><div class="check-box checked" onclick="tog(this)"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>Leak source identified &amp; sealed</div>
+      <div class="check-row"><div class="check-box" onclick="tog(this)"></div>Photo of gauges captured</div>
+      <div class="check-row"><div class="check-box" onclick="tog(this)"></div>Homeowner signature obtained</div>
+      <div class="check-row"><div class="check-box checked" onclick="tog(this)"><svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>Safety equipment worn</div>
+    </div>
+    <button class="sc-btn">Complete &amp; file docs</button>
+  </div>`,
+
+  (a) => `<div class="sc">${dots(a)}
+    <div class="sc-label">AI coaching — present to homeowner</div>
+    <div class="sc-upsell">
+      <div class="sc-upsell-label">AI opportunity</div>
+      <div class="sc-card-title" style="margin-bottom:3px">Annual service plan</div>
+      <div style="font-size:10px;color:var(--gray-800);line-height:1.5"><strong>Your talking point:</strong> "This unit is 7 years old — our agreement covers priority dispatch and discounts on parts. Most homeowners see $280+ in savings annually."</div>
+      <div class="sc-row" style="margin-top:7px;margin-bottom:0">
+        <span style="font-size:12px;font-weight:500;color:#412402">$149/year</span>
+        <button style="background:#BA7517;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:9.5px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif">Present</button>
+      </div>
+    </div>
+    <div class="sc-ai">
+      <div class="sc-ai-label">AI opportunity</div>
+      <div class="sc-card-title" style="margin-bottom:3px">Air filter replacement</div>
+      <div style="font-size:10px;line-height:1.5"><strong>Your talking point:</strong> "I noticed your filter is overdue — I have a replacement on my truck and can swap it in 10 minutes while I'm here."</div>
+      <div class="sc-row" style="margin-top:7px;margin-bottom:0">
+        <span style="font-size:12px;font-weight:500;color:#185FA5">$45 installed</span>
+        <button style="background:#185FA5;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:9.5px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif">Add to invoice</button>
+      </div>
+    </div>
+    <button class="sc-btn-ghost">Skip — close job</button>
+  </div>`,
+];
+
+let current = 0;
+
+function render(idx) {
+  document.getElementById('phone-screen').innerHTML = screens[idx](idx);
+  document.getElementById('phone-title').textContent = titles[idx];
+  document.getElementById('phone-badge').textContent = badges[idx];
+  document.querySelectorAll('.phone-nav button').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('#screen-list li').forEach((li,i) => li.classList.toggle('active', i===idx));
+}
+
+function switchTab(idx) {
+  current = idx;
+  render(idx);
+}
+
+function tog(el) {
+  el.classList.toggle('checked');
+  el.innerHTML = el.classList.contains('checked')
+    ? '<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1.5 4.5l2 2L7.5 2" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'
+    : '';
+}
+
+render(0);
+</script>
+</body>
+</html>
